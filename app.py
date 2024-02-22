@@ -1,43 +1,39 @@
-from flask import Flask, render_template, request
-import re
+# Import necessary libraries
+import os
+from flask import Flask, request, render_template
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.feature_extraction.text import CountVectorizer
+from sklearn import svm
 
-app = Flask(__name__)
+# Load and preprocess your data, train your model
+spam = pd.read_csv("C:\\Users\\ellij\\Desktop\\PhishingDetector\\spam.csv")
+x = spam['EmailText']
+y = spam['Label']
 
-def is_phishing(email):
-    # Check for suspicious sender address
-    sender_pattern = r"\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b"
-    suspicious_sender_domains = ["phishing.com", "scam.net", "hackers.org"]  # Example suspicious domains
-    sender_match = re.search(sender_pattern, email)
-    if sender_match:
-        sender_domain = sender_match.group().split('@')[-1]
-        if sender_domain in suspicious_sender_domains:
-            return True
+x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.2)
 
-    # Check for suspicious content
-    suspicious_keywords = ["verify", "login", "password", "urgent", "account", "update"]  # Example suspicious keywords
-    for keyword in suspicious_keywords:
-        if keyword in email.lower():
-            return True
+cv = CountVectorizer()
+features = cv.fit_transform(x_train)
 
-    # Check for suspicious links
-    link_pattern = r"http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\\(\\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+"
-    links = re.findall(link_pattern, email)
-    for link in links:
-        if "phishing" in link or "scam" in link:
-            return True
+model = svm.SVC()
+model.fit(features, y_train)
 
-    return False
+# Create Flask app
+app=Flask(__name__,template_folder='templates')
 
-@app.route('/', methods=['GET', 'POST'])
+@app.route("/")
 def home():
-    if request.method == 'POST':
-        email = request.form['email']
-        if is_phishing(email):
-            result = "This email is likely a phishing attempt."
-        else:
-            result = "This email seems legitimate."
-        return render_template('result.html', result=result)
-    return render_template('index.html')
+    return render_template('home.html')
+
+@app.route('/predict', methods=['POST'])
+def predict():
+    email = request.form['email']
+    features = cv.transform([email])
+    prediction = model.predict(features)
+    return render_template('result.html', prediction=prediction)  # A HTML page to show the result
 
 if __name__ == '__main__':
     app.run(debug=True)
+
+print(os.path.abspath(app.template_folder))
