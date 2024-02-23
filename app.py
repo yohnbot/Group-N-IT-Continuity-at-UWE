@@ -4,6 +4,10 @@ import re
 app = Flask(__name__)
 
 def is_phishing(email):
+    # Check for random inputs without "@" sign
+    if "@" not in email:
+        return "ERROR: Random Input Detected. This may not be a valid email address."
+
     # Check for suspicious sender address
     sender_pattern = r"\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b"
     # Example suspicious domains
@@ -34,10 +38,13 @@ def is_phishing(email):
 def home():
     if request.method == 'POST':
         email = request.form['email']
-        if is_phishing(email):
+        phishing_result = is_phishing(email)
+        if phishing_result == True:
             result = "WARNING: This email is most likely a phishing attempt."
-        else:
+        elif phishing_result == False:
             result = "This email is legitimate :)"
+        else:
+            result = phishing_result
         return render_template('result.html', result=result)
     return render_template('index.html')
 
