@@ -10,7 +10,7 @@ Focus: Create a program to detect phishing email determines whether an email is 
 ## Project scope:
 
 * Implement email verification using the Hunter.io API, displaying the validation result, a score and a detailed report that breaks down parameters such as email status and deliverability.
-* Integrated URL scanner using VirusTotal API, scanned against over 100 engines, such as Google Safe Browsing that check URLs for malicious content. Displays validation result, a section that displays three industry recognised cyber-intelligence engines result and more.
+* Integrate URL scanner using VirusTotal API, scanned against over 100 engines, such as Google Safe Browsing that check URLs for malicious content. Displays validation result, a section that displays three industry recognised cyber-intelligence engines result and more.
 * Create a website to host both tools in one place.
 * Design user interface using HTML, CSS, and Tailwind CSS for a modern and responsive layout.
 * Project demonstrates my skills in back-end development, API integration and front-end design.
