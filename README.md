@@ -2,6 +2,11 @@
 
 Focus: Create a program to detect phishing email determines whether an email is legitamite or not. 
 
+# Group management
+* Project Lead and Lead Developer: Raiyan
+* Documentation and Research: John
+* Research and Development: Elliot
+
 ## Project scope:
 
 * Implement email verification using the Hunter.io API, displaying the validation result, a score and a detailed report that breaks down parameters such as email status and deliverability.
