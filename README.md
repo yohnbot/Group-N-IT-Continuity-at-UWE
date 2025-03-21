@@ -18,7 +18,7 @@ Focus: Create a program to detect phishing email determines whether an email is 
 Skills: Tailwind CSS · Front-End Development · API Development · Cybersecurity · Python (Programming Language) · Back-End Web Development
 
 
-##Snapshots:
+## Snapshots:
 ![image](https://github.com/user-attachments/assets/fe8f104c-0dcc-4fde-b726-e51c45c8d92a)
 ![image](https://github.com/user-attachments/assets/7e10cafa-9132-4a83-a3e4-b90260fa68ee)
 ![image](https://github.com/user-attachments/assets/231f56f7-99e6-440f-987f-3c77942e25b1)
